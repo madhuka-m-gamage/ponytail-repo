@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+</head>
+<body class="bg-transparent text-[var(--foreground)] antialiased p-2 font-sans select-none">
+  <div class="bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)] rounded-xl p-4 shadow-sm max-w-full">
+    
+    <!-- Top Bar: Title & Mode Toggles -->
+    <div class="flex items-center justify-between border-b border-[var(--border)] pb-3 mb-3">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-blue-600/10 text-blue-600 flex items-center justify-center font-bold text-sm">
+          PT
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="font-bold text-sm text-[var(--foreground)]">Ponytail Executive Explorer</h3>
+            <span id="activeModeBadge" class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/20">
+              full (active)
+            </span>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground)]">"The best code is the code you never wrote."</p>
+        </div>
+      </div>
+
+      <!-- Mode Selector -->
+      <div class="flex items-center bg-[var(--background)] border border-[var(--border)] rounded-lg p-0.5 text-xs">
+        <button onclick="setMode('lite')" id="btn-lite" class="px-2.5 py-1 rounded-md transition-all font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]">Lite</button>
+        <button onclick="setMode('full')" id="btn-full" class="px-2.5 py-1 rounded-md transition-all font-medium bg-[var(--card)] text-[var(--foreground)] shadow-xs">Full</button>
+        <button onclick="setMode('ultra')" id="btn-ultra" class="px-2.5 py-1 rounded-md transition-all font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]">Ultra</button>
+      </div>
+    </div>
+
+    <!-- Mode Description Callout -->
+    <div id="modeDescription" class="text-xs bg-[var(--background)] border border-[var(--border)] rounded-lg p-2.5 mb-3 text-[var(--muted-foreground)]">
+      <span class="font-semibold text-[var(--foreground)]">Full Mode (Default):</span> Enforces the 7-rung Ladder of Laziness, eliminates bloated wrappers, keeps validation at trust boundaries, and appends a minimal test for risky logic.
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <div class="flex gap-2 border-b border-[var(--border)] pb-2 mb-3 text-xs">
+      <button onclick="switchTab('ladder')" id="tab-ladder" class="px-3 py-1 rounded-md font-semibold bg-blue-600 text-white transition-all">Ladder of Laziness</button>
+      <button onclick="switchTab('scenario1')" id="tab-scenario1" class="px-3 py-1 rounded-md font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">Scenario 1: Modal UI</button>
+      <button onclick="switchTab('scenario2')" id="tab-scenario2" class="px-3 py-1 rounded-md font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">Scenario 2: API Protection</button>
+      <button onclick="switchTab('metrics')" id="tab-metrics" class="px-3 py-1 rounded-md font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">Benchmark Savings</button>
+    </div>
+
+    <!-- TAB 1: Ladder of Laziness -->
+    <div id="content-ladder" class="space-y-2">
+      <div class="grid grid-cols-6 gap-1.5 text-xs text-center font-medium">
+        <div onclick="selectLadder(1)" id="ladder-1" class="p-2 rounded-lg border border-blue-500 bg-blue-500/10 cursor-pointer transition-all">
+          <div class="font-bold text-blue-600 dark:text-blue-400">1. YAGNI</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] truncate">Need to exist?</div>
+        </div>
+        <div onclick="selectLadder(2)" id="ladder-2" class="p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] cursor-pointer hover:border-blue-400 transition-all">
+          <div class="font-bold">2. Codebase</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] truncate">Reuse existing</div>
+        </div>
+        <div onclick="selectLadder(3)" id="ladder-3" class="p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] cursor-pointer hover:border-blue-400 transition-all">
+          <div class="font-bold">3. Stdlib</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] truncate">Platform native</div>
+        </div>
+        <div onclick="selectLadder(4)" id="ladder-4" class="p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] cursor-pointer hover:border-blue-400 transition-all">
+          <div class="font-bold">4. Deps</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] truncate">Installed pkg</div>
+        </div>
+        <div onclick="selectLadder(5)" id="ladder-5" class="p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] cursor-pointer hover:border-blue-400 transition-all">
+          <div class="font-bold">5. One-Line</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] truncate">Glance clarity</div>
+        </div>
+        <div onclick="selectLadder(6)" id="ladder-6" class="p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] cursor-pointer hover:border-blue-400 transition-all">
+          <div class="font-bold">6. Min Code</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] truncate">Smallest + test</div>
+        </div>
+      </div>
+      <div id="ladderDetail" class="p-3 bg-[var(--background)] border border-[var(--border)] rounded-lg text-xs">
+        <span class="font-bold text-blue-600 dark:text-blue-400">Rung 1: Does this feature need to exist at all? (YAGNI)</span>
+        <p class="mt-1 text-[var(--muted-foreground)]">Skip speculative options, configurable knobs, and abstractions that nobody asked for. If a request is vague, build the leanest core version that delivers value.</p>
+      </div>
+    </div>
+
+    <!-- TAB 2: Scenario 1 - Modal Dialog -->
+    <div id="content-scenario1" class="hidden space-y-2 text-xs">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="p-3 rounded-lg border border-red-500/20 bg-red-500/5">
+          <div class="flex justify-between items-center font-bold text-red-600 dark:text-red-400 mb-1">
+            <span>Standard Agent (No Skill)</span>
+            <span class="text-xs bg-red-500/10 px-1.5 py-0.5 rounded">35 LOC &bull; 1 Dep</span>
+          </div>
+          <p class="text-[var(--muted-foreground)] text-xs mb-2">Installs Radix UI, writes 35 lines of nested JSX wrappers (Portal, Overlay, Content, Trigger).</p>
+          <pre class="bg-black/10 dark:bg-black/40 p-2 rounded text-[11px] font-mono overflow-x-auto text-[var(--foreground)]">npm i @radix-ui/react-dialog
+&lt;Dialog.Root&gt;
+  &lt;Dialog.Portal&gt;
+    &lt;Dialog.Overlay /&gt;
+    &lt;Dialog.Content&gt;...&lt;/Dialog.Content&gt;
+  &lt;/Dialog.Portal&gt;
+&lt;/Dialog.Root&gt;</pre>
+        </div>
+        <div class="p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5">
+          <div class="flex justify-between items-center font-bold text-emerald-600 dark:text-emerald-400 mb-1">
+            <span>Ponytail Solution</span>
+            <span class="text-xs bg-emerald-500/15 px-1.5 py-0.5 rounded font-bold">8 LOC &bull; 0 Dep (&minus;77%)</span>
+          </div>
+          <p class="text-[var(--muted-foreground)] text-xs mb-2">Uses browser native &lt;dialog&gt; with built-in accessibility, backdrop, and focus trap.</p>
+          <pre class="bg-black/10 dark:bg-black/40 p-2 rounded text-[11px] font-mono overflow-x-auto text-[var(--foreground)]">&lt;dialog id="del"&gt;
+  &lt;p&gt;Delete this item?&lt;/p&gt;
+  &lt;button onclick="this.closest('dialog').close()"&gt;Cancel&lt;/button&gt;
+  &lt;button onclick="confirmDelete()"&gt;Delete&lt;/button&gt;
+&lt;/dialog&gt;
+&lt;!-- Open via: del.showModal() --&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Scenario 2 - Rate Limiting -->
+    <div id="content-scenario2" class="hidden space-y-2 text-xs">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="p-3 rounded-lg border border-red-500/20 bg-red-500/5">
+          <div class="flex justify-between items-center font-bold text-red-600 dark:text-red-400 mb-1">
+            <span>Standard Agent (No Skill)</span>
+            <span class="text-xs bg-red-500/10 px-1.5 py-0.5 rounded">128 LOC &bull; Over-engineered</span>
+          </div>
+          <p class="text-[var(--muted-foreground)] text-xs mb-2">Speculates Redis cluster architectures, multi-endpoint sliding windows, custom token bucket logic.</p>
+          <div class="text-[11px] text-[var(--muted-foreground)] bg-black/5 dark:bg-black/30 p-2 rounded font-mono">
+            Produces 5 conflicting implementations, custom middlewares, unverified Redis dependencies.
+          </div>
+        </div>
+        <div class="p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5">
+          <div class="flex justify-between items-center font-bold text-emerald-600 dark:text-emerald-400 mb-1">
+            <span>Ponytail Solution</span>
+            <span class="text-xs bg-emerald-500/15 px-1.5 py-0.5 rounded font-bold">10 LOC &bull; &minus;92% Reduction</span>
+          </div>
+          <p class="text-[var(--muted-foreground)] text-xs mb-2">Applies single decorator + intentional technical debt ceiling for future horizontal scaling.</p>
+          <pre class="bg-black/10 dark:bg-black/40 p-2 rounded text-[11px] font-mono overflow-x-auto text-[var(--foreground)]">@app.get("/api/endpoint")
+@limiter.limit("10/minute")
+async def my_endpoint(request: Request):
+    return {"status": "ok"}
+# shortcut: in-memory limiter; upgrade to Redis when clustering</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Benchmark Metrics -->
+    <div id="content-metrics" class="hidden space-y-2 text-xs">
+      <div class="grid grid-cols-4 gap-2 text-center">
+        <div class="p-2 bg-[var(--background)] border border-[var(--border)] rounded-lg">
+          <div class="text-base font-extrabold text-blue-600 dark:text-blue-400">&minus;53%</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] uppercase font-semibold">Lines of Code</div>
+        </div>
+        <div class="p-2 bg-[var(--background)] border border-[var(--border)] rounded-lg">
+          <div class="text-base font-extrabold text-emerald-600 dark:text-emerald-400">&minus;45%</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] uppercase font-semibold">Output Tokens</div>
+        </div>
+        <div class="p-2 bg-[var(--background)] border border-[var(--border)] rounded-lg">
+          <div class="text-base font-extrabold text-purple-600 dark:text-purple-400">&minus;26%</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] uppercase font-semibold">API Cost</div>
+        </div>
+        <div class="p-2 bg-[var(--background)] border border-[var(--border)] rounded-lg">
+          <div class="text-base font-extrabold text-amber-600 dark:text-amber-400">98%</div>
+          <div class="text-[11px] text-[var(--muted-foreground)] uppercase font-semibold">Risky Tests</div>
+        </div>
+      </div>
+      <div class="p-2.5 bg-[var(--background)] border border-[var(--border)] rounded-lg text-xs text-[var(--muted-foreground)]">
+        <span class="font-bold text-[var(--foreground)]">Verified Agentic Benchmark:</span> 39 tasks across real FastAPI + React codebases, Opus 5.5, 5 runs each. 100% security checks passed; tests caught 66% of injected bugs (vs 46% baseline).
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const modes = {
+      lite: {
+        badge: 'lite (active)',
+        badgeClass: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/20',
+        desc: '<span class="font-semibold text-[var(--foreground)]">Lite Mode:</span> Builds what was asked without pushing back. Names the smaller alternative in one concise sentence and lets you choose.'
+      },
+      full: {
+        badge: 'full (active)',
+        badgeClass: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
+        desc: '<span class="font-semibold text-[var(--foreground)]">Full Mode (Default):</span> Enforces the 7-rung Ladder of Laziness, eliminates bloated wrappers, keeps validation at trust boundaries, and appends a minimal test for risky logic.'
+      },
+      ultra: {
+        badge: 'ultra (active)',
+        badgeClass: 'bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/20',
+        desc: '<span class="font-semibold text-[var(--foreground)]">Ultra Mode:</span> Actively challenges the request. Pushes back before building on any complexity, abstraction, or feature not strictly justified.'
+      }
+    };
+
+    function setMode(mode) {
+      ['lite', 'full', 'ultra'].forEach(m => {
+        const btn = document.getElementById('btn-' + m);
+        if (m === mode) {
+          btn.className = 'px-2.5 py-1 rounded-md transition-all font-medium bg-[var(--card)] text-[var(--foreground)] shadow-xs';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-md transition-all font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]';
+        }
+      });
+      const badge = document.getElementById('activeModeBadge');
+      badge.textContent = modes[mode].badge;
+      badge.className = 'text-xs px-2 py-0.5 rounded-full font-semibold border ' + modes[mode].badgeClass;
+      document.getElementById('modeDescription').innerHTML = modes[mode].desc;
+    }
+
+    function switchTab(tab) {
+      ['ladder', 'scenario1', 'scenario2', 'metrics'].forEach(t => {
+        const content = document.getElementById('content-' + t);
+        const btn = document.getElementById('tab-' + t);
+        if (t === tab) {
+          content.classList.remove('hidden');
+          btn.className = 'px-3 py-1 rounded-md font-semibold bg-blue-600 text-white transition-all';
+        } else {
+          content.classList.add('hidden');
+          btn.className = 'px-3 py-1 rounded-md font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all';
+        }
+      });
+    }
+
+    const ladderDetails = {
+      1: { title: "Rung 1: Does this feature need to exist at all? (YAGNI)", desc: "Skip speculative options, configurable knobs, and abstractions that nobody asked for. If a request is vague, build the leanest core version that delivers value." },
+      2: { title: "Rung 2: Is it already in this codebase?", desc: "Reuse internal helpers, shared UI components, utility modules, and domain services. Never duplicate logic that already exists elsewhere in the project." },
+      3: { title: "Rung 3: Does the standard library or platform handle it?", desc: "Prefer native language built-ins (e.g., structuredClone, Array methods, Python collections) and platform features (HTML5 &lt;dialog&gt;, &lt;input type='date'&gt;)." },
+      4: { title: "Rung 4: Can an installed dependency do the job?", desc: "Use libraries already listed in package.json or requirements.txt. Never add a new third-party dependency for a handful of utility lines." },
+      5: { title: "Rung 5: Can it be written in a single line?", desc: "If a clean, glance-readable one-liner satisfies the contract without decoding mental friction, write the one-liner." },
+      6: { title: "Rung 6: Only then: write the minimum code that works", desc: "Write the absolute smallest working diff. If it contains non-trivial logic (branching, loops, parsing, money, auth), append one concise unit test." }
+    };
+
+    function selectLadder(step) {
+      for (let i = 1; i <= 6; i++) {
+        const item = document.getElementById('ladder-' + i);
+        if (i === step) {
+          item.className = 'p-2 rounded-lg border border-blue-500 bg-blue-500/10 cursor-pointer transition-all';
+        } else {
+          item.className = 'p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] cursor-pointer hover:border-blue-400 transition-all';
+        }
+      }
+      const d = ladderDetails[step];
+      document.getElementById('ladderDetail').innerHTML = `
+        <span class="font-bold text-blue-600 dark:text-blue-400">${d.title}</span>
+        <p class="mt-1 text-[var(--muted-foreground)]">${d.desc}</p>
+      `;
+    }
+  </script>
+</body>
+</html>

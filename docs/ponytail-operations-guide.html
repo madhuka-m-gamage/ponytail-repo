@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ponytail Agent Skill Suite — Operations Manual & Senior Engineering Standard</title>
+<style>
+  @page {
+    size: A4;
+    margin: 12mm 15mm 12mm 15mm;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1E293B;
+    background-color: #FFFFFF;
+    line-height: 1.4;
+    font-size: 8.5pt;
+    margin: 0;
+    padding: 0;
+  }
+  .page {
+    position: relative;
+    height: 273mm;
+    max-height: 273mm;
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  .page-last {
+    page-break-after: auto;
+    break-after: auto;
+  }
+  .content-body {
+    flex: 1;
+  }
+
+  /* Header */
+  .header {
+    border-bottom: 2px solid #0284C7;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .header-compact {
+    border-bottom: 1.5px solid #0284C7;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  h1 {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .doc-type {
+    font-size: 8pt;
+    font-weight: 700;
+    color: #0284C7;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .subtitle {
+    font-size: 8.8pt;
+    color: #475569;
+    margin: 2px 0 5px 0;
+    font-weight: 500;
+  }
+  .badges {
+    display: flex;
+    gap: 5px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 1.5px 6px;
+    border-radius: 4px;
+    font-size: 7pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .badge-primary { background-color: #F0F9FF; color: #0284C7; border: 1px solid #BAE6FD; }
+  .badge-success { background-color: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+  .badge-dark    { background-color: #F8FAFC; color: #334155; border: 1px solid #CBD5E1; }
+  .badge-warn    { background-color: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; }
+
+  /* Headings */
+  h2 {
+    font-size: 9.8pt;
+    font-weight: 700;
+    color: #0F172A;
+    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 2px;
+    margin: 6px 0 4px 0;
+  }
+  p { margin: 0 0 4px 0; }
+
+  /* Executive Metrics Bar */
+  .metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin: 5px 0 8px 0;
+  }
+  .metric-box {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 5px;
+    padding: 4px 6px;
+    text-align: center;
+  }
+  .metric-val {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #0284C7;
+    line-height: 1.1;
+  }
+  .metric-val.green { color: #16A34A; }
+  .metric-label {
+    font-size: 6.8pt;
+    color: #64748B;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Flow Diagram */
+  .flow-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 5px;
+    padding: 5px 8px;
+    margin: 5px 0 7px 0;
+  }
+  .flow-node {
+    flex: 1;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 4px;
+    padding: 3px 5px;
+    text-align: center;
+  }
+  .flow-node strong { display: block; font-size: 7.8pt; color: #0F172A; }
+  .flow-node span   { font-size: 6.8pt; color: #64748B; }
+  .flow-arrow       { padding: 0 4px; font-size: 9pt; color: #94A3B8; font-weight: bold; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4px 0 6px 0;
+    font-size: 7.8pt;
+  }
+  th, td {
+    padding: 3px 5px;
+    text-align: left;
+    border: 1px solid #CBD5E1;
+  }
+  th {
+    background-color: #F1F5F9;
+    font-weight: 700;
+    color: #0F172A;
+  }
+  tr:nth-child(even) { background-color: #F8FAFC; }
+
+  /* Step Grid */
+  .step-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 4px 0 6px 0;
+  }
+  .step-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 4px;
+    padding: 5px 7px;
+  }
+  .step-card h4 {
+    margin: 0 0 2px 0;
+    font-size: 8.2pt;
+    color: #0F172A;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .step-badge {
+    background-color: #0284C7;
+    color: #FFFFFF;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6.5pt;
+    font-weight: bold;
+  }
+
+  /* Scenario Comparison Card */
+  .scenario-container {
+    border: 1px solid #E2E8F0;
+    border-radius: 5px;
+    margin: 5px 0 7px 0;
+    background-color: #FFFFFF;
+    overflow: hidden;
+  }
+  .scenario-header {
+    background-color: #F1F5F9;
+    padding: 4px 8px;
+    font-size: 8.2pt;
+    font-weight: 700;
+    color: #0F172A;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .scenario-arm {
+    padding: 5px 7px;
+    font-size: 7.5pt;
+  }
+  .scenario-arm:first-child {
+    border-right: 1px solid #E2E8F0;
+    background-color: #FFFDFD;
+  }
+  .scenario-arm:last-child {
+    background-color: #F6FEF9;
+  }
+  .arm-title {
+    font-weight: 700;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .arm-title.red { color: #DC2626; }
+  .arm-title.green { color: #16A34A; }
+
+  /* Callouts */
+  .callout {
+    padding: 4px 7px;
+    border-radius: 4px;
+    margin: 4px 0 6px 0;
+    font-size: 7.8pt;
+  }
+  .callout-info   { background-color: #F0F9FF; border-left: 3px solid #0284C7; color: #0369A1; }
+  .callout-tip    { background-color: #F0FDF4; border-left: 3px solid #16A34A; color: #166534; }
+  .callout-warn   { background-color: #FFFBEB; border-left: 3px solid #D97706; color: #92400E; }
+  .callout-purple { background-color: #F5F3FF; border-left: 3px solid #7C3AED; color: #6D28D9; }
+  .callout strong { display: inline-block; margin-bottom: 1px; }
+
+  code {
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 7.4pt;
+    background-color: #F1F5F9;
+    padding: 1px 3px;
+    border-radius: 3px;
+    color: #0F172A;
+  }
+  kbd {
+    display: inline-block;
+    padding: 1px 3px;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 7pt;
+    color: #1E293B;
+    background-color: #F8FAFC;
+    border: 1px solid #CBD5E1;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #E2E8F0;
+    padding-top: 4px;
+    font-size: 7.2pt;
+    color: #64748B;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1 ==================== -->
+  <div class="page">
+    <div class="content-body">
+      <div class="header">
+        <div class="header-top">
+          <h1>Ponytail Agent Skill Suite</h1>
+          <span class="doc-type">OPERATIONS MANUAL &bull; REV 5.3</span>
+        </div>
+        <div class="subtitle">Architectural Standard, "Ladder of Laziness" Framework &amp; Enterprise Efficiency Review</div>
+        <div class="badges">
+          <span class="badge badge-primary">Skill Suite v5.3</span>
+          <span class="badge badge-success">Works with 20+ Agents</span>
+          <span class="badge badge-dark">MIT License</span>
+          <span class="badge badge-warn">Zero-Bloat Mandate</span>
+        </div>
+      </div>
+
+      <!-- Verified Empirical Benchmarks Strip -->
+      <div class="metrics-strip">
+        <div class="metric-box">
+          <div class="metric-val green">&minus;53%</div>
+          <div class="metric-label">Code Shipped</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val green">&minus;45%</div>
+          <div class="metric-label">Output Tokens</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val green">&minus;26%</div>
+          <div class="metric-label">API Cost</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val green">&minus;41%</div>
+          <div class="metric-label">Task Latency</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">98%</div>
+          <div class="metric-label">Risky Logic Tested</div>
+        </div>
+      </div>
+
+      <h2>1. Architectural Overview &amp; Executive Core Philosophy</h2>
+      <p>
+        <strong>Ponytail</strong> channels the archetype of the seasoned, minimalist senior developer who reviews fifty lines of generated boilerplate, says nothing, and replaces it with one clean line. Its guiding axiom is: <em>"The best code is the code you never wrote."</em> AI code generators routinely over-engineer solutions—inventing premature abstractions, introducing duplicate helpers, and pulling in multi-megabyte dependencies for single-function tasks. Ponytail forces the agent to exhaust built-in and existing options before authoring any new code.
+      </p>
+
+      <h2>2. The "Ladder of Laziness" Decision Topology</h2>
+      <p>Before writing a single line of code, the AI agent must trace the connected scope and stop at the very first rung that fully satisfies the task requirements:</p>
+
+      <div class="flow-container">
+        <div class="flow-node">
+          <strong>1. YAGNI</strong>
+          <span>Does it need to exist?</span>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <strong>2. Codebase</strong>
+          <span>Reuse internal helper</span>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <strong>3. Stdlib / Native</strong>
+          <span>Browser or standard lib</span>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <strong>4. Dependencies</strong>
+          <span>Use installed package</span>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <strong>5. One-Liner</strong>
+          <span>Immediate glance readability</span>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <strong>6. Minimum Code</strong>
+          <span>Smallest diff + test</span>
+        </div>
+      </div>
+
+      <h2>3. Non-Negotiable Boundaries &amp; Integrity Rules</h2>
+      <p>Ponytail is aggressively lazy regarding the <em>solution</em>, but strictly disciplined regarding <em>integrity, verification, and blast-radius tracing</em>:</p>
+      
+      <div class="step-grid">
+        <div class="step-card">
+          <h4><span class="step-badge">&times;</span> What Ponytail NEVER Cuts</h4>
+          <span>Trust-boundary validations, security filters (SQLi, XSS, SSRF), error handling that safeguards against data loss, accessible semantics (ARIA, keyboard navigation), hardware calibration routines, and anything explicitly required by the user.</span>
+        </div>
+        <div class="step-card">
+          <h4><span class="step-badge">&#10003;</span> Mandatory Test Coverage</h4>
+          <span>Any non-trivial logic (branches, loops, data parsers, financial arithmetic, authentication, state writes) <em>must leave behind a concise unit test</em> or assert-based self-verification. Trivial changes require zero overhead.</span>
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <strong>Intentional Technical Debt Annotation:</strong> Whenever a pragmatic shortcut is implemented to avoid heavy architecture, it must be tagged with: <code>shortcut: &lt;ceiling limit&gt;, &lt;upgrade trigger event&gt;</code>. These are tracked by <code>/ponytail-debt</code> to prevent debt from rotting.
+      </div>
+
+      <h2>4. Operating Intensity Modes &amp; Command Interface</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 15%;">Intensity</th>
+            <th style="width: 45%;">Behavioral Enforcement</th>
+            <th style="width: 40%;">Ideal Deployment Scenario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>lite</strong></td>
+            <td>Builds requested functionality; surfaces minimal alternatives in a one-line recommendation for user confirmation.</td>
+            <td>Exploratory prototyping or when precise adherence to a user's exact specification is mandatory.</td>
+          </tr>
+          <tr>
+            <td><strong>full</strong> <em>(Default)</em></td>
+            <td>Enforces the 7-rung Ladder of Laziness, eliminates bloat, reuses components, and appends mandatory test assertions.</td>
+            <td>Standard production software engineering across enterprise repositories and collaborative teams.</td>
+          </tr>
+          <tr>
+            <td><strong>ultra</strong></td>
+            <td>Directly challenges user assumptions; actively rejects unneeded features or premature scaling before touching code.</td>
+            <td>Legacy refactoring, aggressive technical debt cleanups, or codebases plagued by chronic over-engineering.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>Runtime Control:</strong> Switch modes instantly via chat commands: <kbd>/ponytail lite</kbd>, <kbd>/ponytail full</kbd>, <kbd>/ponytail ultra</kbd>, or disable via <kbd>/ponytail off</kbd>.
+      </div>
+
+    </div>
+    <div class="footer">
+      <span>Ponytail Operations Manual &bull; Document ID: PT-SOP-2026-v5</span>
+      <span>Confidential &amp; Proprietary &bull; Internal Engineering Standard</span>
+      <span>Page 1 of 2</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2 ==================== -->
+  <div class="page page-last">
+    <div class="content-body">
+      <div class="header-compact">
+        <h1 style="font-size: 11pt;">Ponytail Engineering Standard &bull; Production Scenarios &amp; Governance</h1>
+        <span class="doc-type">SPECIFICATIONS &amp; COMPARISONS</span>
+      </div>
+
+      <h2>5. Concrete Scenario 1: Frontend Confirmation Modal Dialog</h2>
+      <p><strong>Requirement:</strong> Prompt user with a confirmation dialog before deleting an enterprise resource.</p>
+      
+      <div class="scenario-container">
+        <div class="scenario-header">
+          <span>Task: Add confirmation modal before destructive deletion</span>
+          <span>Diff Delta: <strong>&minus;32 lines &amp; zero external dependencies</strong></span>
+        </div>
+        <div class="scenario-grid">
+          <div class="scenario-arm">
+            <div class="arm-title red"><span>Standard Agent (No Skill)</span> <span>35 LOC + 1 Dep</span></div>
+            <code>npm install @radix-ui/react-dialog</code><br>
+            Imports <code>* as Dialog</code>; wraps code in <code>Dialog.Root</code>, <code>Dialog.Trigger</code>, <code>Dialog.Portal</code>, <code>Dialog.Overlay</code>, <code>Dialog.Content</code>, <code>Dialog.Title</code>, and custom styling containers. Introduces bundle bloat, runtime hydration overhead, and dependency security vulnerability surface.
+          </div>
+          <div class="scenario-arm">
+            <div class="arm-title green"><span>Ponytail Solution</span> <span>8 LOC &bull; Pure Native</span></div>
+            <code>&lt;dialog id="del-dlg"&gt;&lt;p&gt;Delete item?&lt;/p&gt;&lt;button id="c"&gt;Cancel&lt;/button&gt;&lt;button id="d"&gt;Delete&lt;/button&gt;&lt;/dialog&gt;</code><br>
+            Uses native HTML5 <code>dialog.showModal()</code>. The browser natively traps focus, escapes on <kbd>Esc</kbd>, renders built-in <code>::backdrop</code>, and is fully accessible by default without external dependencies.
+          </div>
+        </div>
+      </div>
+
+      <h2>6. Concrete Scenario 2: Backend API Rate Limiting (FastAPI)</h2>
+      <p><strong>Requirement:</strong> Safeguard an endpoint from denial-of-service spam in a Python FastAPI backend service.</p>
+      
+      <div class="scenario-container">
+        <div class="scenario-header">
+          <span>Task: Rate limit incoming API requests to 10 requests per minute</span>
+          <span>Diff Delta: <strong>128 LOC &rarr; 10 LOC (&minus;92% Reduction)</strong></span>
+        </div>
+        <div class="scenario-grid">
+          <div class="scenario-arm">
+            <div class="arm-title red"><span>Standard Agent (No Skill)</span> <span>128 Lines Boilerplate</span></div>
+            Generates 5 speculative architectures: custom Redis clusters, rolling-window limits, multi-tier middleware, sliding-window algorithms, and multi-endpoint exception tables before the user even establishes scale requirements. Creates high cognitive load and untested failure points.
+          </div>
+          <div class="scenario-arm">
+            <div class="arm-title green"><span>Ponytail Solution</span> <span>10 LOC + Explicit Debt Tag</span></div>
+            Decorates route with existing <code>slowapi.Limiter</code> in 10 lines.<br>
+            Appends explicit deferral: <code># shortcut: in-memory limiter; upgrade to Redis backend when multi-worker clustering is deployed</code>. Satisfies immediate threat with zero friction and a clear evolution path.
+          </div>
+        </div>
+      </div>
+
+      <h2>7. Skill Suite Command Matrix &amp; Governance Tools</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 22%;">Command</th>
+            <th style="width: 48%;">Functional Capability</th>
+            <th style="width: 30%;">Operational Trigger</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/ponytail-review</code></td>
+            <td>Reviews diffs against connected code for bugs, security risks, scale races, missing tests, and bloat reduction.</td>
+            <td>Pre-commit audits, PR reviews, and code verification before merge.</td>
+          </tr>
+          <tr>
+            <td><code>/ponytail-audit</code></td>
+            <td>Performs end-to-end repository scans, ranking findings into Must Fix, Should Fix, and Nice to Have.</td>
+            <td>Codebase onboarding, legacy modernization, and quarterly health checkups.</td>
+          </tr>
+          <tr>
+            <td><code>/ponytail-debt</code></td>
+            <td>Harvests all <code>shortcut:</code> annotations across repository into an actionable technical debt ledger.</td>
+            <td>Sprint planning, release hardening, and architectural backlog grooming.</td>
+          </tr>
+          <tr>
+            <td><code>/ponytail-gain</code></td>
+            <td>Displays the verified empirical benchmark scoreboard comparing code reduction and test density.</td>
+            <td>Executive reporting, team retrospectives, and impact demonstrations.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>8. Deployment &amp; Quick-Start Procedure</h2>
+      <div class="step-grid">
+        <div class="step-card">
+          <h4><span class="step-badge">1</span> Claude Code &amp; Codex</h4>
+          <span>Run <code>/plugin marketplace add DietrichGebert/ponytail</code> followed by <code>/plugin install ponytail@ponytail</code>. For Codex: trust lifecycle hooks.</span>
+        </div>
+        <div class="step-card">
+          <h4><span class="step-badge">2</span> Antigravity &amp; Gemini CLI</h4>
+          <span>Load <code>skills/ponytail/SKILL.md</code> directly or place <code>AGENTS.md</code> in project root for continuous passive activation across all subagents.</span>
+        </div>
+        <div class="step-card">
+          <h4><span class="step-badge">3</span> Cursor, Windsurf, Cline</h4>
+          <span>Copy bundled <code>.cursor/rules/ponytail.mdc</code>, <code>.windsurf/rules/</code>, or root <code>AGENTS.md</code>. Automatically guides code suggestions without commands.</span>
+        </div>
+        <div class="step-card">
+          <h4><span class="step-badge">4</span> Post-Install Verification</h4>
+          <span>Execute <kbd>/ponytail-help</kbd> in your chat terminal. Confirm prompt displays <code>Ponytail v5.3 [full]</code> and verify test execution on first code change.</span>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        <strong>The Senior Developer Takeaway:</strong> Ponytail proves that writing less code is not laziness—it is the highest form of engineering craftsmanship. Fewer lines translate directly to fewer bugs, minimal maintenance burden, faster compile/test cycles, and lower operational token costs.
+      </div>
+
+    </div>
+    <div class="footer">
+      <span>Ponytail Operations Manual &bull; Document ID: PT-SOP-2026-v5</span>
+      <span>Confidential &amp; Proprietary &bull; Internal Engineering Standard</span>
+      <span>Page 2 of 2</span>
+    </div>
+  </div>
+
+</body>
+</html>
